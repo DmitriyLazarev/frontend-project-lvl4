@@ -1,22 +1,21 @@
 import React from 'react';
-import { Container, Stack, Button } from 'react-bootstrap';
+import { Button, Card, Stack } from 'react-bootstrap';
 
 function NotFound() {
   return (
-    <Container className="text-center">
-      <Stack>
-        <h1>404</h1>
-        <p className="fs-3">
-          <span className="text-danger">Opps!</span>
-          {' '}
-          Page not found.
-        </p>
-        <p className="lead">
-          The page you’re looking for doesn’t exist.
-        </p>
-        <Button href="/" className="align-self-center">Go Home</Button>
-      </Stack>
-    </Container>
+    <Stack className="h-100 justify-content-center align-items-center">
+      <Card className="text-center">
+        <Card.Body>
+          <Card.Title>
+            <h1>404</h1>
+          </Card.Title>
+          <Card.Text>
+            Запрашеваемая страница не существует.
+          </Card.Text>
+          <Button href="/" variant="primary">На главную</Button>
+        </Card.Body>
+      </Card>
+    </Stack>
   );
 }
 
