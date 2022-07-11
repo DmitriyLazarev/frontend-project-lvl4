@@ -1,4 +1,4 @@
 start-frontend:
-    npm start
+	npm start
 start-backend:
-    npm start-server -p 5001
+	npx start-server -p 5001
