@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../hooks';
+import useAuth from '../hooks/useAuth';
 import routes from '../utils/routes';
 
 function Login() {

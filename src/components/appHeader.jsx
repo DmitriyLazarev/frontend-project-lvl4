@@ -4,7 +4,7 @@ import {
   Container, Navbar,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../hooks';
+import useAuth from '../hooks/useAuth';
 
 function AuthButton() {
   const auth = useAuth();

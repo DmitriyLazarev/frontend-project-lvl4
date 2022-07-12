@@ -4,7 +4,7 @@ import {
   Col,
   Container, Row,
 } from 'react-bootstrap';
-import useAuth from '../hooks';
+import useAuth from '../hooks/useAuth';
 import fetchData from '../thunks/dataFetchThunk';
 import Channels from './channels';
 import Messages from './messages';

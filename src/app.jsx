@@ -5,7 +5,7 @@ import {
   Route, Routes, useLocation, Navigate,
 } from 'react-router-dom';
 import Login from './components/login';
-import useAuth from './hooks';
+import useAuth from './hooks/useAuth';
 import NotFound from './components/notFound';
 import Chat from './components/chat';
 import AppHeader from './components/appHeader';
