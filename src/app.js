@@ -10,7 +10,23 @@ import NotFound from './components/not-found';
 
 function App() {
   return (
-    <Container className="h-100">
+    <div
+      className="h-100 d-flex flex-column"
+    >
+
+      <div
+        className="shadow-sm bg-white p-3"
+      >
+        <Container>
+
+          <p
+            className="h5 m-0"
+          >
+            Hexlet Chat Project
+          </p>
+        </Container>
+      </div>
+
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -18,7 +34,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </Container>
+    </div>
   );
 }
 
