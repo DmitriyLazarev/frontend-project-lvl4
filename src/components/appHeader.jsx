@@ -3,14 +3,16 @@ import {
   Button,
   Container, Navbar,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks';
 
 function AuthButton() {
   const auth = useAuth();
+  const { t } = useTranslation('translation', { keyPrefix: 'header' });
 
   return (
     auth.loggedIn
-      ? <Button onClick={auth.logOut}>Выйти</Button>
+      ? <Button onClick={auth.logOut}>{t('logOut')}</Button>
       : null
   );
 }

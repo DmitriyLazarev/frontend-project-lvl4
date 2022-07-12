@@ -4,13 +4,10 @@ import {
   BrowserRouter as Router,
   Route, Routes, useLocation, Navigate,
 } from 'react-router-dom';
-import { Provider as StoreProvider } from 'react-redux';
 import Login from './components/login';
 import useAuth from './hooks';
 import NotFound from './components/notFound';
 import Chat from './components/chat';
-import store from './slices/index';
-import AuthProvider from './providers/authProvider';
 import AppHeader from './components/appHeader';
 
 function PrivateRoute({ children }) {
@@ -31,26 +28,21 @@ function AuthRoute({ children }) {
 
 function App() {
   return (
-    <StoreProvider store={store}>
+    <div
+      className="h-100 d-flex flex-column"
+    >
 
-      <AuthProvider>
+      <Router>
 
-        <div
-          className="h-100 d-flex flex-column"
-        >
-          <Router>
+        <AppHeader />
 
-            <AppHeader />
-
-            <Routes>
-              <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
-              <Route path="/" element={<PrivateRoute><Chat /></PrivateRoute>} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Router>
-        </div>
-      </AuthProvider>
-    </StoreProvider>
+        <Routes>
+          <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
+          <Route path="/" element={<PrivateRoute><Chat /></PrivateRoute>} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

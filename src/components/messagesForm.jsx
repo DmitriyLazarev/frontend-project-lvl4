@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Field, Form, Formik } from 'formik';
 import { Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 function MessagesBody() {
+  const { t } = useTranslation('translation', { keyPrefix: 'messages' });
+
   const inputRef = useRef();
 
   useEffect(() => {
@@ -36,7 +39,7 @@ function MessagesBody() {
                 type="text"
                 id="username"
                 name="username"
-                placeholder="Введите сообщение..."
+                placeholder={t('placeholder')}
                 className="form-control"
               />
             </label>
@@ -46,7 +49,7 @@ function MessagesBody() {
               type="submit"
               className="mx-1"
             >
-              Отправить
+              {t('addButton')}
             </Button>
           </Form>
         )}

@@ -2,8 +2,10 @@ import React from 'react';
 import {
   Button, Card, Container, Stack,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 function NotFound() {
+  const { t } = useTranslation('translation', { keyPrefix: 'page404' });
   return (
     <Container
       className="h-100 d-flex"
@@ -25,15 +27,14 @@ function NotFound() {
             </Card.Title>
 
             <Card.Text>
-              Запрашеваемая страница не существует.
+              {t('pageNotFound')}
             </Card.Text>
 
             <Button
               href="/"
               variant="primary"
-              size="lg"
             >
-              На главную
+              {t('mainPage')}
             </Button>
           </Card.Body>
         </Card>

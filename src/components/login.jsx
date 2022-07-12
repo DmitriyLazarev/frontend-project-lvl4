@@ -8,10 +8,12 @@ import { Formik, Form, Field } from 'formik';
 import clsx from 'clsx';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks';
 import routes from '../utils/routes';
 
 function Login() {
+  const { t } = useTranslation('translation', { keyPrefix: 'login' });
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
@@ -24,9 +26,9 @@ function Login() {
 
   const SignupSchema = yup.object({
     username: yup.string()
-      .required('Поле должно быть заполнено.'),
+      .required('required'),
     password: yup.string()
-      .required('Поле должно быть заполнено.'),
+      .required('required'),
   });
 
   return (
@@ -90,7 +92,7 @@ function Login() {
                       type="text"
                       id="username"
                       name="username"
-                      placeholder="Ваш ник"
+                      placeholder={t('username')}
                       className={clsx(
                         'form-control',
                         {
@@ -103,7 +105,7 @@ function Login() {
                         role="alert"
                         className="text-danger small"
                       >
-                        {errors.username}
+                        {t(errors.username)}
                       </span>
                     ) : null}
                   </label>
@@ -118,7 +120,7 @@ function Login() {
                       type="password"
                       id="password"
                       name="password"
-                      placeholder="Ваш пароль"
+                      placeholder={t('password')}
                       className={clsx(
                         'form-control',
                         {
@@ -131,7 +133,7 @@ function Login() {
                         role="alert"
                         className="text-danger small"
                       >
-                        {errors.password}
+                        {t(errors.password)}
                       </span>
                     ) : null}
                   </label>
@@ -143,7 +145,7 @@ function Login() {
                     size="lg"
                     className="mt-2"
                   >
-                    Войти
+                    {t('logIn')}
                   </Button>
 
                   {authFailed ? (
@@ -151,7 +153,7 @@ function Login() {
                       role="alert"
                       className="text-danger m-0 mt-2"
                     >
-                      Неверные имя пользователя или пароль
+                      {t('autFailed')}
                     </p>
                   ) : null}
                 </Form>

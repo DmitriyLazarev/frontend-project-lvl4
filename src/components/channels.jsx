@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   changeChannel,
   selectors,
@@ -10,6 +11,7 @@ function Channels() {
   const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const dispatch = useDispatch();
+  const { t } = useTranslation('translation', { keyPrefix: 'channels' });
 
   return (
     <div
@@ -19,7 +21,7 @@ function Channels() {
       <h2
         className="h4 px-3 mb-3"
       >
-        Каналы
+        {t('title')}
       </h2>
 
       <Nav
