@@ -1,35 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   BrowserRouter as Router,
   Route, Routes, useLocation, Navigate,
 } from 'react-router-dom';
 import { Button, Container, Navbar } from 'react-bootstrap';
+import { Provider as StoreProvider } from 'react-redux';
 import Login from './components/login';
-import AuthContext from './contexts/index';
-import useAuth from './hooks/index';
-import NotFound from './components/not-found';
-
-function AuthProvider({ children }) {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const logIn = () => setLoggedIn(true);
-  const logOut = () => {
-    // eslint-disable-next-line no-undef
-    localStorage.removeItem('user');
-    setLoggedIn(false);
-  };
-
-  const value = React.useMemo(() => ({
-    loggedIn, logIn, logOut,
-  }), [loggedIn, logIn, logOut]);
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+import useAuth from './hooks';
+import NotFound from './components/notFound';
+import Chat from './components/chat';
+import store from './slices/index';
+import AuthProvider from './providers/authProvider';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
@@ -50,47 +32,47 @@ function AuthButton() {
   );
 }
 
-function LoginRoute() {
-  const auth = useAuth();
-
+function AuthRoute({ children }) {
+  const { loggedIn } = useAuth();
   return (
-    auth.loggedIn
-      ? <NotFound />
-      : <Login />
+    loggedIn ? <Navigate to="/" /> : children
   );
 }
 
 function App() {
   return (
-    <AuthProvider>
-      <div
-        className="h-100 d-flex flex-column"
-      >
-        <Router>
+    <StoreProvider store={store}>
 
-          <div
-            className="shadow-sm"
-          >
+      <AuthProvider>
+        <div
+          className="h-100 d-flex flex-column"
+        >
+          <Router>
 
-            <Container className="d-flex justify-content-between align-items-center">
+            <div
+              className="shadow-sm"
+            >
 
-              <Navbar bg="light" expand="lg">
+              <Container className="d-flex justify-content-between align-items-center">
 
-                <Navbar.Brand href="/">Hexlet Chat Project</Navbar.Brand>
-              </Navbar>
+                <Navbar bg="light" expand="lg">
 
-              <AuthButton />
-            </Container>
-          </div>
+                  <Navbar.Brand href="/">Hexlet Chat Project</Navbar.Brand>
+                </Navbar>
 
-          <Routes>
-            <Route path="/login" element={<LoginRoute />} />
-            <Route path="/" element={<PrivateRoute>1</PrivateRoute>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
-      </div>
-    </AuthProvider>
+                <AuthButton />
+              </Container>
+            </div>
+
+            <Routes>
+              <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
+              <Route path="/" element={<PrivateRoute><Chat /></PrivateRoute>} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </div>
+      </AuthProvider>
+    </StoreProvider>
   );
 }
 

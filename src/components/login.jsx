@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks';
+import routes from '../utils/routes';
 
 function Login() {
   const auth = useAuth();
@@ -53,7 +54,7 @@ function Login() {
                 setAuthFailed(false);
 
                 try {
-                  const res = await axios.post('/api/v1/login', values);
+                  const res = await axios.post(routes.loginPath(), values);
                   // eslint-disable-next-line no-undef
                   localStorage.setItem('user', JSON.stringify(res.data));
                   auth.logIn();
