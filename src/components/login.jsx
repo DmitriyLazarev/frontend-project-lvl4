@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Button,
   Card, Container, Stack,
@@ -6,17 +6,26 @@ import {
 import * as yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import clsx from 'clsx';
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../hooks';
 
 function Login() {
+  const auth = useAuth();
+  const [authFailed, setAuthFailed] = useState(false);
+  const inputRef = useRef();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const SignupSchema = yup.object({
-    loginField: yup.string()
-      .min(2, 'Слишком короткий никнейм.')
-      .max(16, 'Никнейм слишком длинный.')
+    username: yup.string()
       .required('Поле должно быть заполнено.'),
-    passwordField: yup.string()
-      .required('Поле должно быть заполнено.')
-      .min(8, 'Пароль слишком короткий, должно быть минимум 8 символов.')
-      .matches(/[a-zA-Z]/, 'Пароль должен состоять только из латинских букв.'),
+    password: yup.string()
+      .required('Поле должно быть заполнено.'),
   });
 
   return (
@@ -38,71 +47,90 @@ function Login() {
             </Card.Title>
 
             <Formik
-              initialValues={{ loginField: '', passwordField: '' }}
+              initialValues={{ username: '', password: '' }}
               validationSchema={SignupSchema}
-              onSubmit={(values) => {
-                console.log(values);
+              onSubmit={async (values) => {
+                setAuthFailed(false);
+
+                try {
+                  const res = await axios.post('/api/v1/login', values);
+                  // eslint-disable-next-line no-undef
+                  localStorage.setItem('user', JSON.stringify(res.data));
+                  auth.logIn();
+                  const { from } = location.state || { from: { pathname: '/' } };
+                  navigate(from);
+                } catch (err) {
+                  if (err.isAxiosError && err.response.status === 401) {
+                    setAuthFailed(true);
+                    inputRef.current.select();
+                    return;
+                  }
+                  throw err;
+                }
               }}
             >
               {({
                 errors,
                 touched,
                 isValid,
+                isUsernameErrorShown = errors.username && touched.username,
+                isPasswordErrorShown = errors.password && touched.password,
               }) => (
                 <Form
                   className="d-flex flex-column"
                 >
                   {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                   <label
-                    htmlFor="loginField"
+                    htmlFor="username"
                   >
 
                     <Field
+                      innerRef={inputRef}
                       type="text"
-                      id="loginField"
-                      name="loginField"
+                      id="username"
+                      name="username"
                       placeholder="Ваш ник"
                       className={clsx(
                         'form-control',
                         {
-                          'is-invalid': errors.loginField && touched.loginField,
+                          'is-invalid': isUsernameErrorShown,
                         },
                       )}
                     />
-                    {errors.loginField && touched.loginField ? (
+                    {isUsernameErrorShown ? (
                       <span
                         role="alert"
                         className="text-danger small"
                       >
-                        {errors.loginField}
+                        {errors.username}
                       </span>
                     ) : null}
                   </label>
 
                   {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                   <label
-                    htmlFor="passwordField"
+                    htmlFor="password"
                     className="mt-2"
                   >
 
                     <Field
                       type="password"
-                      id="passwordField"
-                      name="passwordField"
+                      id="password"
+                      name="password"
                       placeholder="Ваш пароль"
                       className={clsx(
                         'form-control',
                         {
-                          'is-invalid': errors.passwordField && touched.passwordField,
+                          'is-invalid': isPasswordErrorShown,
                         },
                       )}
                     />
-                    {errors.passwordField && touched.passwordField ? (
+                    {isPasswordErrorShown ? (
                       <span
                         role="alert"
                         className="text-danger small"
                       >
-                        {errors.passwordField}
+                        {errors.password}
                       </span>
                     ) : null}
                   </label>
@@ -116,6 +144,15 @@ function Login() {
                   >
                     Войти
                   </Button>
+
+                  {authFailed ? (
+                    <p
+                      role="alert"
+                      className="text-danger m-0 mt-2"
+                    >
+                      Неверные имя пользователя или пароль
+                    </p>
+                  ) : null}
                 </Form>
               )}
             </Formik>
