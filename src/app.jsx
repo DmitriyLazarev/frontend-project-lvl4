@@ -50,12 +50,12 @@ function App() {
           <Router>
 
             <div
-              className="shadow-sm"
+              className="shadow-sm bg-white"
             >
 
               <Container className="d-flex justify-content-between align-items-center">
 
-                <Navbar bg="light" expand="lg">
+                <Navbar expand="lg">
 
                   <Navbar.Brand href="/">Hexlet Chat Project</Navbar.Brand>
                 </Navbar>

@@ -32,7 +32,7 @@ function Channels() {
         {channels.map((channel) => (
           <Nav.Item
             as="li"
-            key={channel}
+            key={channel.id}
             className="w-100"
           >
 

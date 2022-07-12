@@ -6,14 +6,14 @@ import { selectors as messagesSelectors } from '../slices/messagesSlice';
 function MessagesHeader() {
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannelData = channels.filter((item) => item.id === currentChannelId)[0];
+  const currentChannel = channels.find(({ id }) => id === currentChannelId);
 
   const messages = useSelector(messagesSelectors.selectAll);
   const currentChannelMessages = messages.filter((item) => item.channelId === currentChannelId);
 
   return (
     <div
-      className="bg-light mb-4 py-4 px-3 shadow-sm small"
+      className="bg-light py-4 px-3 shadow-sm small"
     >
 
       <p
@@ -21,7 +21,7 @@ function MessagesHeader() {
       >
         <b>
           #
-          {currentChannelData.name}
+          {currentChannel ? currentChannel.name : null}
         </b>
       </p>
 

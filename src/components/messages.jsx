@@ -1,5 +1,7 @@
 import React from 'react';
 import MessagesHeader from './messagesHeader';
+import MessagesBody from './messagesBody';
+import MessagesForm from './messagesForm';
 
 function Messages() {
   return (
@@ -8,6 +10,8 @@ function Messages() {
     >
 
       <MessagesHeader />
+      <MessagesBody />
+      <MessagesForm />
     </div>
   );
 }
