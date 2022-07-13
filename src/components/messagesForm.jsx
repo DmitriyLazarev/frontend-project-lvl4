@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 import useChatApi from '../hooks/useChatApi';
 import useAuth from '../hooks/useAuth';
 
@@ -26,7 +27,7 @@ function MessagesBody() {
   const { sendNewMessage } = useChatApi();
   const username = getUsername();
   const outgoingMessage = {
-    body: message,
+    body: filter.clean(message),
     username,
     channelId,
   };

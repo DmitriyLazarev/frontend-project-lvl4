@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import filter from 'leo-profanity';
 import store from './slices/index';
 import AuthProvider from './providers/authProvider';
 import App from './app';
@@ -18,6 +19,9 @@ export default async () => {
         ru,
       },
     });
+  filter.clearList();
+  filter.add(filter.getDictionary('ru'));
+  filter.add(filter.getDictionary('en'));
   return (
     <StoreProvider store={store}>
       <ChapProvider>
