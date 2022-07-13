@@ -27,7 +27,7 @@ function AppHeader() {
 
         <Navbar expand="lg">
 
-          <Navbar.Brand href="/">Hexlet Chat Project</Navbar.Brand>
+          <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
         </Navbar>
 
         <AuthButton />
