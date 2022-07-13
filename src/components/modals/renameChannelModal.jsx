@@ -51,7 +51,7 @@ function RenameChannelModal() {
       <Modal.Body>
 
         <Formik
-          initialValues={{ channelName: '' }}
+          initialValues={{ channelName: currentChannel.name }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
             const name = values.channelName;
