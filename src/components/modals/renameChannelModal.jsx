@@ -1,17 +1,17 @@
 import { useTranslation } from 'react-i18next';
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import clsx from 'clsx';
+import { toast } from 'react-toastify';
 import { selectors } from '../../slices/channelsSlice';
 import useChatApi from '../../hooks/useChatApi';
 import { hideModal } from '../../slices/modalSlice';
 
 function RenameChannelModal() {
   const { t } = useTranslation('translation', { keyPrefix: 'renameChannelModal' });
-  const [isNetworkError, setIsNetworkError] = useState(false);
   const inputRef = createRef();
 
   const { renameCurrentChannel } = useChatApi();
@@ -28,7 +28,9 @@ function RenameChannelModal() {
     if (response.status === 'ok') {
       dispatch(hideModal());
     } else {
-      setIsNetworkError(true);
+      toast.error(t('networkError'), {
+        position: 'top-center',
+      });
     }
   };
 
@@ -83,16 +85,16 @@ function RenameChannelModal() {
                   className={clsx(
                     'form-control',
                     {
-                      'is-invalid': isNetworkError || isChannelNameErrorShown,
+                      'is-invalid': isChannelNameErrorShown,
                     },
                   )}
                 />
 
-                {isNetworkError || isChannelNameErrorShown ? (
+                {isChannelNameErrorShown ? (
                   <span
                     className="text-danger small"
                   >
-                    {isNetworkError ? t('networkError') : t(errors.channelName)}
+                    {t(errors.channelName)}
                   </span>
                 ) : null}
               </label>

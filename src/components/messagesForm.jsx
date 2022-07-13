@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import useChatApi from '../hooks/useChatApi';
 import useAuth from '../hooks/useAuth';
 
@@ -12,10 +13,8 @@ function MessagesBody() {
 
   const inputRef = useRef();
   const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState('');
 
   const messageHandler = (e) => {
-    setIsError(false);
     setMessage(e.target.value);
   };
 
@@ -35,7 +34,9 @@ function MessagesBody() {
     if (response.status === 'ok') {
       setMessage('');
     } else {
-      setIsError(true);
+      toast.error(t('networkError'), {
+        position: 'top-center',
+      });
     }
   };
 
@@ -84,14 +85,6 @@ function MessagesBody() {
             {t('addButton')}
           </Button>
         </div>
-
-        {isError ? (
-          <p
-            className="text-danger small mt-1"
-          >
-            {t('networkError')}
-          </p>
-        ) : null}
       </Form>
     </div>
   );

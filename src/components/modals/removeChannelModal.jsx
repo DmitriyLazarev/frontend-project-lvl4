@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal, Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { hideModal } from '../../slices/modalSlice';
 import useChatApi from '../../hooks/useChatApi';
 
 function RemoveChannelModal() {
   const { t } = useTranslation('translation', { keyPrefix: 'removeChannelModal' });
-  const [isNetworkError, setIsNetworkError] = useState(false);
 
   const { removeCurrentChannel } = useChatApi();
   const currentChannel = useSelector((state) => state.modals.item);
@@ -17,7 +17,9 @@ function RemoveChannelModal() {
     if (response.status === 'ok') {
       dispatch(hideModal());
     } else {
-      setIsNetworkError(true);
+      toast.error(t('networkError'), {
+        position: 'top-center',
+      });
     }
   };
 
@@ -66,14 +68,6 @@ function RemoveChannelModal() {
               {t('removeButton')}
             </Button>
           </div>
-
-          {isNetworkError ? (
-            <span
-              className="text-danger small"
-            >
-              {t('networkError')}
-            </span>
-          ) : null}
         </Form>
       </Modal.Footer>
     </Modal>

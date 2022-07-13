@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import clsx from 'clsx';
+import { toast } from 'react-toastify';
 import { changeChannel, selectors } from '../../slices/channelsSlice';
 import useChatApi from '../../hooks/useChatApi';
 
 function CreateChannelModal() {
   const { t } = useTranslation('translation', { keyPrefix: 'createChannelModal' });
   const [isCreateChannelModalVisible, setIsCreateChannelModalVisible] = useState(false);
-  const [isNetworkError, setIsNetworkError] = useState(false);
   const inputRef = createRef();
 
   const { addNewChannel } = useChatApi();
@@ -38,7 +38,9 @@ function CreateChannelModal() {
       dispatch(changeChannel(response.data.id));
       setIsCreateChannelModalVisible(false);
     } else {
-      setIsNetworkError(true);
+      toast.error(t('networkError'), {
+        position: 'top-center',
+      });
     }
   };
 
@@ -100,16 +102,16 @@ function CreateChannelModal() {
                     className={clsx(
                       'form-control',
                       {
-                        'is-invalid': isNetworkError || isChannelNameErrorShown,
+                        'is-invalid': isChannelNameErrorShown,
                       },
                     )}
                   />
 
-                  {isNetworkError || isChannelNameErrorShown ? (
+                  {isChannelNameErrorShown ? (
                     <span
                       className="text-danger small"
                     >
-                      {isNetworkError ? t('networkError') : t(errors.channelName)}
+                      {t(errors.channelName)}
                     </span>
                   ) : null}
                 </label>

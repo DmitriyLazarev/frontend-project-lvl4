@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Route, Routes, useLocation, Navigate,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Login from './components/login';
 import useAuth from './hooks/useAuth';
 import NotFound from './components/notFound';
@@ -43,6 +44,8 @@ function App() {
           <Route path="/signup" element={<AuthRoute><SignUp /></AuthRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+
+        <ToastContainer />
       </Router>
     </div>
   );
