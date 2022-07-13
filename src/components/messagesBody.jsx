@@ -19,7 +19,7 @@ function MessagesBody() {
           className="text-break mb-2"
         >
           <b>{message.username}</b>
-          {' '}
+          {': '}
           {message.body}
         </div>
       ))}

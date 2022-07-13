@@ -6,6 +6,7 @@ import store from './slices/index';
 import AuthProvider from './providers/authProvider';
 import App from './app';
 import ru from './locales/ru';
+import ChapProvider from './providers/charProvider';
 
 export default async () => {
   const i18n = i18next.createInstance();
@@ -19,11 +20,13 @@ export default async () => {
     });
   return (
     <StoreProvider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </I18nextProvider>
+      <ChapProvider>
+        <I18nextProvider i18n={i18n}>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </I18nextProvider>
+      </ChapProvider>
     </StoreProvider>
   );
 };
