@@ -69,10 +69,10 @@ function MessagesBody() {
               type="text"
               id="username"
               name="username"
+              required
               placeholder={t('placeholder')}
               value={message}
               onChange={messageHandler}
-              className="form-control"
             />
           </label>
 
