@@ -39,7 +39,7 @@
     "url": "https://github.com/DmitriyLazarev/frontend-project-lvl3/issues"
   },
   "scripts": {
-    "build": "npm run build",
+    "build": "make install",
     "start": "start-server -p 5001"
   },
   "eslintConfig": {
