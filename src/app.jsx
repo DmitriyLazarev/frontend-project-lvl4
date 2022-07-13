@@ -9,6 +9,7 @@ import useAuth from './hooks/useAuth';
 import NotFound from './components/notFound';
 import Chat from './components/chat';
 import AppHeader from './components/appHeader';
+import SignUp from './components/signup';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
@@ -39,6 +40,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
           <Route path="/" element={<PrivateRoute><Chat /></PrivateRoute>} />
+          <Route path="/signup" element={<AuthRoute><SignUp /></AuthRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

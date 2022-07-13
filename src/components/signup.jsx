@@ -1,23 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
 import {
-  Button,
-  Card, Container, Stack,
+  Button, Card, Container, Stack,
 } from 'react-bootstrap';
-import * as yup from 'yup';
-import { Formik, Form, Field } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import clsx from 'clsx';
-import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../hooks/useAuth';
+import React, { useEffect, useRef, useState } from 'react';
+import * as yup from 'yup';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import routes from '../utils/routes';
+import useAuth from '../hooks/useAuth';
 
-function Login() {
-  const { t } = useTranslation('translation', { keyPrefix: 'login' });
-  const auth = useAuth();
-  const [authFailed, setAuthFailed] = useState(false);
+function SignUp() {
+  const { t } = useTranslation('translation', { keyPrefix: 'signup' });
+  const [signUpFailed, setSignUpFailed] = useState(false);
   const inputRef = useRef();
-  const location = useLocation();
+  const { logIn } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,9 +24,15 @@ function Login() {
 
   const SignupSchema = yup.object({
     username: yup.string()
+      .min(3, 'minUsername')
+      .max(20, 'maxUsername')
       .required('required'),
     password: yup.string()
+      .min(6, 'minPassword')
       .required('required'),
+    confirmPassword: yup.string()
+      .required('required')
+      .oneOf([yup.ref('password')], 'samePassword'),
   });
 
   return (
@@ -50,21 +54,19 @@ function Login() {
             </Card.Title>
 
             <Formik
-              initialValues={{ username: '', password: '' }}
+              initialValues={{ username: '', password: '', confirmPassword: '' }}
               validationSchema={SignupSchema}
               onSubmit={async (values) => {
-                setAuthFailed(false);
-
                 try {
-                  const res = await axios.post(routes.loginPath(), values);
+                  const response = await axios.post(routes.registrationPath(), values);
                   // eslint-disable-next-line no-undef
-                  localStorage.setItem('user', JSON.stringify(res.data));
-                  auth.logIn();
-                  const { from } = location.state || { from: { pathname: '/' } };
-                  navigate(from);
+                  localStorage.setItem('user', JSON.stringify(response.data));
+                  setSignUpFailed(false);
+                  logIn();
+                  navigate(routes.chatPage());
                 } catch (err) {
-                  if (err.isAxiosError && err.response.status === 401) {
-                    setAuthFailed(true);
+                  if (err.isAxiosError && err.response.status === 409) {
+                    setSignUpFailed(true);
                     inputRef.current.select();
                     return;
                   }
@@ -78,6 +80,7 @@ function Login() {
                 isValid,
                 isUsernameErrorShown = errors.username && touched.username,
                 isPasswordErrorShown = errors.password && touched.password,
+                isConfirmPasswordErrorShown = errors.confirmPassword && touched.confirmPassword,
               }) => (
                 <Form
                   className="d-flex flex-column"
@@ -138,6 +141,34 @@ function Login() {
                     ) : null}
                   </label>
 
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                  <label
+                    htmlFor="confirmPassword"
+                    className="mt-2"
+                  >
+
+                    <Field
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder={t('confirmPassword')}
+                      className={clsx(
+                        'form-control',
+                        {
+                          'is-invalid': isConfirmPasswordErrorShown,
+                        },
+                      )}
+                    />
+                    {isConfirmPasswordErrorShown ? (
+                      <span
+                        role="alert"
+                        className="text-danger small"
+                      >
+                        {t(errors.confirmPassword)}
+                      </span>
+                    ) : null}
+                  </label>
+
                   <Button
                     disabled={!isValid}
                     variant="primary"
@@ -145,15 +176,15 @@ function Login() {
                     size="lg"
                     className="mt-2"
                   >
-                    {t('logIn')}
+                    {t('signUp')}
                   </Button>
 
-                  {authFailed ? (
+                  {signUpFailed ? (
                     <p
                       role="alert"
                       className="text-danger m-0 mt-2"
                     >
-                      {t('autFailed')}
+                      {t('signUpFailed')}
                     </p>
                   ) : null}
                 </Form>
@@ -164,13 +195,13 @@ function Login() {
           <Card.Footer
             className="d-flex align-items-center"
           >
-            {t('notRegistered')}
+            {t('registered')}
 
             <Button
-              href="/signup"
+              href="/login"
               variant="link"
             >
-              {t('registration')}
+              {t('signin')}
             </Button>
           </Card.Footer>
         </Card>
@@ -179,4 +210,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;

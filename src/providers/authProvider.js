@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import AuthContext from '../contexts/authContext';
 
 function AuthProvider({ children }) {
-  const [loggedIn, setLoggedIn] = useState(false);
+  // eslint-disable-next-line no-undef
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('user'));
 
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
@@ -16,6 +17,7 @@ function AuthProvider({ children }) {
     const { username } = JSON.parse(localStorage.getItem('user'));
     return username;
   };
+
   const getRequestHeader = () => {
     // eslint-disable-next-line no-undef
     const user = JSON.parse(localStorage.getItem('user'));
