@@ -39,8 +39,10 @@
     "url": "https://github.com/DmitriyLazarev/frontend-project-lvl3/issues"
   },
   "scripts": {
-    "build": "npm run build",
-    "start": "start-server"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
