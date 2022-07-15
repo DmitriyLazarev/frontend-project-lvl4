@@ -1,15 +1,9 @@
-lint:
-	npx eslint .
-install:
-	npm ci
-start:
-	make build
-	npx start-server -s ./build
-build:
-	react-scripts build
-start-frontend:
-	react-scripts start
 start-backend:
 	npx start-server -p 5001
-run:
+start-frontend:
+	make -C application start
+install:
+	npm ci
+	make -C application install
+start:
 	make start-backend & make start-frontend
