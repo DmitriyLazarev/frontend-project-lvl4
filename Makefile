@@ -2,6 +2,7 @@ lint:
 	npx eslint .
 install:
 	npm ci
+	make start
 build:
 	npm run build
 start-frontend:
