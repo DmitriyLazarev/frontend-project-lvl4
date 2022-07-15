@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   BrowserRouter as Router,
-  Route, Routes, useLocation, Navigate,
+  Route, Routes, Navigate,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Login from './components/login';
@@ -14,10 +14,9 @@ import SignUp from './components/signup';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
-  const location = useLocation();
 
   return (
-    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+    auth.loggedIn ? children : <Navigate to="/login" />
   );
 }
 
@@ -41,7 +40,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
           <Route path="/" element={<PrivateRoute><Chat /></PrivateRoute>} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<AuthRoute><SignUp /></AuthRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

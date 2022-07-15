@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import routes from '../utils/routes';
 import useAuth from '../hooks/useAuth';
 
@@ -16,7 +16,6 @@ function SignUp() {
   const [signUpFailed, setSignUpFailed] = useState(false);
   const inputRef = useRef();
   const { logIn } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,8 +63,7 @@ function SignUp() {
                   localStorage.setItem('user', JSON.stringify(response.data));
                   setSignUpFailed(false);
                   logIn();
-                  const { from } = location.state || { from: { pathname: '/' } };
-                  navigate(from);
+                  navigate('/');
                 } catch (err) {
                   if (err.isAxiosError && err.response.status === 409) {
                     setSignUpFailed(true);

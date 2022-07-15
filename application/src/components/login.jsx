@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import clsx from 'clsx';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import routes from '../utils/routes';
@@ -17,7 +17,6 @@ function Login() {
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,8 +59,7 @@ function Login() {
                   // eslint-disable-next-line no-undef
                   localStorage.setItem('user', JSON.stringify(res.data));
                   auth.logIn();
-                  const { from } = location.state || { from: { pathname: '/' } };
-                  navigate(from);
+                  navigate('/');
                 } catch (err) {
                   if (err.isAxiosError && err.response.status === 401) {
                     setAuthFailed(true);
