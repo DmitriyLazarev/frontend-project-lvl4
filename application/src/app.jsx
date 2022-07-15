@@ -41,7 +41,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
           <Route path="/" element={<PrivateRoute><Chat /></PrivateRoute>} />
-          <Route path="/signup" element={<AuthRoute><SignUp /></AuthRoute>} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
