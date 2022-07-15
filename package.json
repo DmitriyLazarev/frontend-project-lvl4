@@ -39,10 +39,9 @@
     "url": "https://github.com/DmitriyLazarev/frontend-project-lvl3/issues"
   },
   "scripts": {
-    "build": "react-scripts build",
+    "build": "npm ci && react-scripts build",
     "start": "start-server -s ./build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npm ci"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "eslintConfig": {
     "extends": [
