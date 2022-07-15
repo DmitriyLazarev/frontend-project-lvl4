@@ -1,8 +1,8 @@
 lint:
 	npx eslint .
 install:
-	make build
-	start-server -s ./build
+	npm start
+	npx start-server -p 5001
 build:
 	npm run build
 start-frontend:
