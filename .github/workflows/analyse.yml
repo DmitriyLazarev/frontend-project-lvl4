@@ -1,0 +1,13 @@
+name: analyse
+on: [push]
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run NPM
+        run: |
+          make build
+      - name: ESLint check
+        run: make lint
