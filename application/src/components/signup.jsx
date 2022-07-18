@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import routes from '../utils/routes';
 import useAuth from '../hooks/useAuth';
 
@@ -197,12 +197,13 @@ function SignUp() {
           >
             {t('registered')}
 
-            <Button
-              href="/login"
+            <Link
+              to="/login"
               variant="link"
+              className="mx-2 link-primary"
             >
               {t('signin')}
-            </Button>
+            </Link>
           </Card.Footer>
         </Card>
       </Stack>

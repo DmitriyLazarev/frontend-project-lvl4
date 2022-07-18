@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import clsx from 'clsx';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import routes from '../utils/routes';
@@ -164,12 +164,13 @@ function Login() {
           >
             {t('notRegistered')}
 
-            <Button
-              href="/signup"
+            <Link
+              to="/signup"
               variant="link"
+              className="mx-2 link-primary"
             >
               {t('registration')}
-            </Button>
+            </Link>
           </Card.Footer>
         </Card>
       </Stack>

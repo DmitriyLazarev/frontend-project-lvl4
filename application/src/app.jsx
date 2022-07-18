@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   BrowserRouter as Router,
-  Route, Routes, Navigate,
+  Route, Routes, useLocation, Navigate,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Login from './components/login';
@@ -14,9 +14,10 @@ import SignUp from './components/signup';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
+  const location = useLocation();
 
   return (
-    auth.loggedIn ? children : <Navigate to="/login" />
+    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
   );
 }
 
