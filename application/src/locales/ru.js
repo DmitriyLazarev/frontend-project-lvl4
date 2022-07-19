@@ -67,6 +67,7 @@ export default {
     messages: {
       placeholder: 'Введите сообщение...',
       addButton: 'Отправить',
+      ariaLabel: 'Новое сообщение',
       messages_one: '{{ count }} сообщение',
       messages_few: '{{ count }} сообщения',
       messages_many: '{{ count }} сообщений',

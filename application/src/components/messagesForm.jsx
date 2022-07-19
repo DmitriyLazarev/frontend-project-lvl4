@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -60,23 +60,19 @@ function MessagesBody() {
           className="d-flex"
         >
 
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label
-            htmlFor="username"
-            className="w-100"
-          >
-
+          <FloatingLabel label={t('placeholder')} controlId="message" className="w-100">
             <Form.Control
               ref={inputRef}
               type="text"
-              id="username"
-              name="username"
+              id="message"
+              name="message"
+              aria-label={t('ariaLabel')}
               required
               placeholder={t('placeholder')}
               value={message}
               onChange={messageHandler}
             />
-          </label>
+          </FloatingLabel>
 
           <Button
             variant="primary"
