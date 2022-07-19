@@ -89,6 +89,7 @@ function SignUp() {
                 <Form.Control
                   name="username"
                   type="text"
+                  id="username"
                   placeholder={t('username')}
                   ref={inputRef}
                   value={f.values.username}
@@ -104,6 +105,7 @@ function SignUp() {
                 <Form.Control
                   name="password"
                   type="password"
+                  id="password"
                   placeholder={t('password')}
                   value={f.values.password}
                   onChange={f.handleChange}
@@ -118,6 +120,7 @@ function SignUp() {
                 <Form.Control
                   name="confirmPassword"
                   type="password"
+                  id="confirmPassword"
                   placeholder={t('confirmPassword')}
                   value={f.values.confirmPassword}
                   onChange={f.handleChange}

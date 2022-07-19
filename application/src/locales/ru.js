@@ -41,6 +41,7 @@ export default {
     },
     createChannelModal: {
       createButton: 'Создать',
+      createButtonShort: '+',
       modalTitle: 'Создать канал',
       fieldPlaceholder: 'Введите имя канала',
       cancel: 'Отменить',

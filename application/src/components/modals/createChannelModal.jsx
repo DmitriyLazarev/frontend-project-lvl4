@@ -1,10 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import React, { createRef, useEffect, useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import {
+  Button, FloatingLabel, Modal, Form,
+} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Field, Form, Formik } from 'formik';
+import {
+  useFormik,
+} from 'formik';
 import * as yup from 'yup';
-import clsx from 'clsx';
 import { toast } from 'react-toastify';
 import { changeChannel, selectors } from '../../slices/channelsSlice';
 import useChatApi from '../../hooks/useChatApi';
@@ -50,6 +53,15 @@ function CreateChannelModal() {
       .notOneOf(channelsNames, 'alreadyExist'),
   });
 
+  const f = useFormik({
+    initialValues: { channelName: '' },
+    validationSchema,
+    onSubmit: (values) => {
+      const name = values.channelName;
+      addNewChannel({ name }, apiResponseHandle);
+    },
+  });
+
   return (
     <>
       <Button
@@ -58,7 +70,7 @@ function CreateChannelModal() {
         size="sm"
         onClick={handleCreateChannelModalOpen}
       >
-        {t('createButton')}
+        {t('createButtonShort')}
       </Button>
 
       <Modal
@@ -72,74 +84,46 @@ function CreateChannelModal() {
 
         <Modal.Body>
 
-          <Formik
-            initialValues={{ channelName: '' }}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              const name = values.channelName;
-              addNewChannel({ name }, apiResponseHandle);
-            }}
+          <Form
+            onSubmit={f.handleSubmit}
           >
-            {({
-              errors,
-              touched,
-              isValid,
-              isChannelNameErrorShown = errors.channelName && touched.channelName,
-            }) => (
-              <Form>
 
-                <label
-                  htmlFor="channelName"
-                  className="w-100"
-                >
+            <FloatingLabel label={t('fieldPlaceholder')} controlId="channelName">
+              <Form.Control
+                name="channelName"
+                type="text"
+                id="channelName"
+                placeholder={t('fieldPlaceholder')}
+                ref={inputRef}
+                value={f.values.channelName}
+                onChange={f.handleChange}
+                isInvalid={(f.touched.channelName && !!f.errors.channelName)}
+              />
+              <Form.Control.Feedback type="invalid">
+                {f.errors.channelName ? t(f.errors.channelName) : null}
+              </Form.Control.Feedback>
+            </FloatingLabel>
 
-                  <Field
-                    innerRef={inputRef}
-                    type="text"
-                    id="channelName"
-                    name="channelName"
-                    placeholder={t('fieldPlaceholder')}
-                    className={clsx(
-                      'form-control',
-                      {
-                        'is-invalid': isChannelNameErrorShown,
-                      },
-                    )}
-                  />
+            <div
+              className="d-flex mt-3"
+            >
 
-                  {isChannelNameErrorShown ? (
-                    <span
-                      className="text-danger small"
-                    >
-                      {t(errors.channelName)}
-                    </span>
-                  ) : null}
-                </label>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleCreateChannelModalClose}
+              >
+                {t('cancel')}
+              </Button>
 
-                <div
-                  className="d-flex mt-3"
-                >
-
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={handleCreateChannelModalClose}
-                  >
-                    {t('cancel')}
-                  </Button>
-
-                  <Button
-                    type="submit"
-                    disabled={!isValid}
-                    className="mx-2"
-                  >
-                    {t('createButton')}
-                  </Button>
-                </div>
-              </Form>
-            )}
-
-          </Formik>
+              <Button
+                type="submit"
+                className="mx-2"
+              >
+                {t('createButton')}
+              </Button>
+            </div>
+          </Form>
         </Modal.Body>
       </Modal>
     </>
