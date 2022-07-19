@@ -78,7 +78,6 @@ function RenameChannelModal() {
             <Form.Control
               name="channelName"
               type="text"
-              id="channelName"
               placeholder={t('fieldPlaceholder')}
               ref={inputRef}
               value={f.values.channelName}

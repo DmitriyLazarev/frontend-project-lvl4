@@ -64,7 +64,6 @@ function MessagesBody() {
             <Form.Control
               ref={inputRef}
               type="text"
-              id="message"
               name="message"
               aria-label={t('ariaLabel')}
               required

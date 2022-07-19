@@ -80,7 +80,6 @@ function Login() {
                   type="text"
                   placeholder={t('username')}
                   ref={inputRef}
-                  id="username"
                   value={f.values.username}
                   onChange={f.handleChange}
                   isInvalid={(f.touched.username && !!f.errors.username) || authFailed}
@@ -94,7 +93,6 @@ function Login() {
                 <Form.Control
                   name="password"
                   type="password"
-                  id="password"
                   placeholder={t('password')}
                   value={f.values.password}
                   onChange={f.handleChange}
