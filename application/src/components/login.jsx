@@ -95,6 +95,7 @@ function Login() {
                       type="text"
                       id="username"
                       name="username"
+                      required
                       placeholder={t('username')}
                       className={clsx(
                         'form-control',
@@ -129,6 +130,7 @@ function Login() {
                       type="password"
                       id="password"
                       name="password"
+                      required
                       placeholder={t('password')}
                       className={clsx(
                         'form-control',

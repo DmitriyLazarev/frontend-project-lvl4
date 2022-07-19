@@ -100,6 +100,7 @@ function SignUp() {
                       type="text"
                       id="username"
                       name="username"
+                      required
                       placeholder={t('username')}
                       className={clsx(
                         'form-control',
@@ -134,6 +135,7 @@ function SignUp() {
                       type="password"
                       id="password"
                       name="password"
+                      required
                       placeholder={t('password')}
                       className={clsx(
                         'form-control',
@@ -167,6 +169,7 @@ function SignUp() {
                     <Field
                       type="password"
                       id="confirmPassword"
+                      required
                       name="confirmPassword"
                       placeholder={t('confirmPassword')}
                       className={clsx(
