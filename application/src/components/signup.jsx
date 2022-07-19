@@ -90,6 +90,12 @@ function SignUp() {
                     htmlFor="username"
                   >
 
+                    <span
+                      className="visually-hidden"
+                    >
+                      {t('username')}
+                    </span>
+
                     <Field
                       innerRef={inputRef}
                       type="text"
@@ -119,6 +125,12 @@ function SignUp() {
                     className="mt-2"
                   >
 
+                    <span
+                      className="visually-hidden"
+                    >
+                      {t('password')}
+                    </span>
+
                     <Field
                       type="password"
                       id="password"
@@ -146,6 +158,12 @@ function SignUp() {
                     htmlFor="confirmPassword"
                     className="mt-2"
                   >
+
+                    <span
+                      className="visually-hidden"
+                    >
+                      {t('confirmPassword')}
+                    </span>
 
                     <Field
                       type="password"

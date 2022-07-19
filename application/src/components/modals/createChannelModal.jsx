@@ -27,7 +27,7 @@ function CreateChannelModal() {
     if (isCreateChannelModalVisible) {
       inputRef.current.focus();
     }
-  }, [isCreateChannelModalVisible]);
+  }, [isCreateChannelModalVisible, inputRef]);
 
   const handleCreateChannelModalOpen = () => {
     setIsCreateChannelModalVisible(true);

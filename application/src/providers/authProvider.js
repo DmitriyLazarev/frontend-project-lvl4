@@ -1,31 +1,32 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import AuthContext from '../contexts/authContext';
 
 function AuthProvider({ children }) {
   // eslint-disable-next-line no-undef
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('user'));
-
-  const logIn = () => setLoggedIn(true);
-  const logOut = () => {
+  const logIn = useCallback(() => {
+    setLoggedIn(true);
+  }, []);
+  const logOut = useCallback(() => {
     // eslint-disable-next-line no-undef
     localStorage.removeItem('user');
     setLoggedIn(false);
-  };
+  }, []);
 
-  const getUsername = () => {
+  const getUsername = useCallback(() => {
     // eslint-disable-next-line no-undef
     const { username } = JSON.parse(localStorage.getItem('user'));
     return username;
-  };
+  }, []);
 
-  const getRequestHeader = () => {
+  const getRequestHeader = useCallback(() => {
     // eslint-disable-next-line no-undef
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user.token) {
       return { headers: { Authorization: `Bearer ${user.token}` } };
     }
     return {};
-  };
+  }, []);
 
   const value = React.useMemo(() => ({
     loggedIn, logIn, logOut, getUsername, getRequestHeader,

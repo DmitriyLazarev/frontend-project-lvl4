@@ -21,7 +21,7 @@ function Login() {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  }, [inputRef]);
 
   const SignupSchema = yup.object({
     username: yup.string()
@@ -85,6 +85,12 @@ function Login() {
                     htmlFor="username"
                   >
 
+                    <span
+                      className="visually-hidden"
+                    >
+                      {t('username')}
+                    </span>
+
                     <Field
                       innerRef={inputRef}
                       type="text"
@@ -113,6 +119,12 @@ function Login() {
                     htmlFor="password"
                     className="mt-2"
                   >
+
+                    <span
+                      className="visually-hidden"
+                    >
+                      {t('password')}
+                    </span>
 
                     <Field
                       type="password"

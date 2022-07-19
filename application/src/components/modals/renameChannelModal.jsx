@@ -22,7 +22,7 @@ function RenameChannelModal() {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  }, [inputRef]);
 
   const apiResponseHandle = (response) => {
     if (response.status === 'ok') {

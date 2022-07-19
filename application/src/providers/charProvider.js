@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import CharContext from '../contexts/chatContext';
@@ -29,26 +29,26 @@ function ChapProvider({ children }) {
       }));
     });
   }, [dispatch, socket]);
-  const sendNewMessage = (message, responseHandle) => {
+  const sendNewMessage = useCallback((message, responseHandle) => {
     socket.emit('newMessage', message, (response) => {
       responseHandle(response);
     });
-  };
-  const addNewChannel = (channelData, responseHandle) => {
+  }, [socket]);
+  const addNewChannel = useCallback((channelData, responseHandle) => {
     socket.emit('newChannel', channelData, (response) => {
       responseHandle(response);
     });
-  };
-  const removeCurrentChannel = (channel, responseHandle) => {
+  }, [socket]);
+  const removeCurrentChannel = useCallback((channel, responseHandle) => {
     socket.emit('removeChannel', channel, (response) => {
       responseHandle(response);
     });
-  };
-  const renameCurrentChannel = (data, responseHandle) => {
+  }, [socket]);
+  const renameCurrentChannel = useCallback((data, responseHandle) => {
     socket.emit('renameChannel', data, (response) => {
       responseHandle(response);
     });
-  };
+  }, [socket]);
 
   const value = React.useMemo(() => ({
     sendNewMessage, addNewChannel, removeCurrentChannel, renameCurrentChannel,
