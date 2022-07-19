@@ -15,6 +15,9 @@ function RemoveChannelModal() {
 
   const apiResponseHandle = (response) => {
     if (response.status === 'ok') {
+      toast.success(t('successMessage'), {
+        position: 'top-center',
+      });
       dispatch(hideModal());
     } else {
       toast.error(t('networkError'), {

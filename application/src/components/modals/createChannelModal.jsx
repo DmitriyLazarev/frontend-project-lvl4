@@ -28,6 +28,9 @@ function CreateChannelModal() {
 
   const apiResponseHandle = (response) => {
     if (response.status === 'ok') {
+      toast.success(t('successMessage'), {
+        position: 'top-center',
+      });
       dispatch(changeChannel(response.data.id));
       dispatch(hideModal());
     } else {
@@ -68,7 +71,7 @@ function CreateChannelModal() {
           onSubmit={f.handleSubmit}
         >
 
-          <FloatingLabel label={t('fieldPlaceholder')} controlId="channelName">
+          <FloatingLabel label={t('fieldLabel')} controlId="channelName">
             <Form.Control
               name="channelName"
               type="text"

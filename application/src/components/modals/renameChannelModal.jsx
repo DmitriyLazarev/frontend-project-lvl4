@@ -29,6 +29,9 @@ function RenameChannelModal() {
 
   const apiResponseHandle = (response) => {
     if (response.status === 'ok') {
+      toast.success(t('successMessage'), {
+        position: 'top-center',
+      });
       dispatch(hideModal());
     } else {
       toast.error(t('networkError'), {
@@ -71,7 +74,7 @@ function RenameChannelModal() {
           onSubmit={f.handleSubmit}
         >
 
-          <FloatingLabel label={t('fieldPlaceholder')} controlId="channelName">
+          <FloatingLabel label={t('fieldLabel')} controlId="channelName">
             <Form.Control
               name="channelName"
               type="text"

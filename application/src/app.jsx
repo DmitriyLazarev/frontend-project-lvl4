@@ -11,6 +11,7 @@ import NotFound from './components/notFound';
 import Chat from './components/chat';
 import AppHeader from './components/appHeader';
 import SignUp from './components/signup';
+import 'react-toastify/dist/ReactToastify.css';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
