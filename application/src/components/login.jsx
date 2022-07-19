@@ -73,7 +73,6 @@ function Login() {
               {({
                 errors,
                 touched,
-                isValid,
                 isUsernameErrorShown = errors.username && touched.username,
                 isPasswordErrorShown = errors.password && touched.password,
               }) => (
@@ -149,7 +148,6 @@ function Login() {
                   </label>
 
                   <Button
-                    disabled={!isValid}
                     variant="primary"
                     type="submit"
                     size="lg"

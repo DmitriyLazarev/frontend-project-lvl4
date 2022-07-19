@@ -77,7 +77,6 @@ function SignUp() {
               {({
                 errors,
                 touched,
-                isValid,
                 isUsernameErrorShown = errors.username && touched.username,
                 isPasswordErrorShown = errors.password && touched.password,
                 isConfirmPasswordErrorShown = errors.confirmPassword && touched.confirmPassword,
@@ -188,7 +187,6 @@ function SignUp() {
                   </label>
 
                   <Button
-                    disabled={!isValid}
                     variant="primary"
                     type="submit"
                     size="lg"
