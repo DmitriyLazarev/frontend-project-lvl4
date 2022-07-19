@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect } from 'react';
 import {
   Button, FloatingLabel, Modal, Form,
 } from 'react-bootstrap';
@@ -11,10 +11,10 @@ import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { changeChannel, selectors } from '../../slices/channelsSlice';
 import useChatApi from '../../hooks/useChatApi';
+import { hideModal } from '../../slices/modalSlice';
 
 function CreateChannelModal() {
   const { t } = useTranslation('translation', { keyPrefix: 'createChannelModal' });
-  const [isCreateChannelModalVisible, setIsCreateChannelModalVisible] = useState(false);
   const inputRef = createRef();
 
   const { addNewChannel } = useChatApi();
@@ -22,24 +22,14 @@ function CreateChannelModal() {
   const channelsNames = channels.map((item) => item.name);
   const dispatch = useDispatch();
 
-  const handleCreateChannelModalClose = () => {
-    setIsCreateChannelModalVisible(false);
-  };
-
   useEffect(() => {
-    if (isCreateChannelModalVisible) {
-      inputRef.current.focus();
-    }
-  }, [isCreateChannelModalVisible, inputRef]);
-
-  const handleCreateChannelModalOpen = () => {
-    setIsCreateChannelModalVisible(true);
-  };
+    inputRef.current.focus();
+  }, [inputRef]);
 
   const apiResponseHandle = (response) => {
     if (response.status === 'ok') {
       dispatch(changeChannel(response.data.id));
-      setIsCreateChannelModalVisible(false);
+      dispatch(hideModal());
     } else {
       toast.error(t('networkError'), {
         position: 'top-center',
@@ -63,70 +53,59 @@ function CreateChannelModal() {
   });
 
   return (
-    <>
-      <Button
-        className="d-flex align-items-center"
-        variant="outline-primary"
-        size="sm"
-        onClick={handleCreateChannelModalOpen}
-      >
-        {t('createButtonShort')}
-      </Button>
+    <Modal
+      show
+      onHide={() => dispatch(hideModal())}
+    >
 
-      <Modal
-        show={isCreateChannelModalVisible}
-        onHide={handleCreateChannelModalClose}
-      >
+      <Modal.Header closeButton>
+        <Modal.Title>{t('modalTitle')}</Modal.Title>
+      </Modal.Header>
 
-        <Modal.Header closeButton>
-          <Modal.Title>{t('modalTitle')}</Modal.Title>
-        </Modal.Header>
+      <Modal.Body>
 
-        <Modal.Body>
+        <Form
+          onSubmit={f.handleSubmit}
+        >
 
-          <Form
-            onSubmit={f.handleSubmit}
+          <FloatingLabel label={t('fieldPlaceholder')} controlId="channelName">
+            <Form.Control
+              name="channelName"
+              type="text"
+              id="channelName"
+              placeholder={t('fieldPlaceholder')}
+              ref={inputRef}
+              value={f.values.channelName}
+              onChange={f.handleChange}
+              isInvalid={(f.touched.channelName && !!f.errors.channelName)}
+            />
+            <Form.Control.Feedback type="invalid">
+              {f.errors.channelName ? t(f.errors.channelName) : null}
+            </Form.Control.Feedback>
+          </FloatingLabel>
+
+          <div
+            className="d-flex mt-3"
           >
 
-            <FloatingLabel label={t('fieldPlaceholder')} controlId="channelName">
-              <Form.Control
-                name="channelName"
-                type="text"
-                id="channelName"
-                placeholder={t('fieldPlaceholder')}
-                ref={inputRef}
-                value={f.values.channelName}
-                onChange={f.handleChange}
-                isInvalid={(f.touched.channelName && !!f.errors.channelName)}
-              />
-              <Form.Control.Feedback type="invalid">
-                {f.errors.channelName ? t(f.errors.channelName) : null}
-              </Form.Control.Feedback>
-            </FloatingLabel>
-
-            <div
-              className="d-flex mt-3"
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => dispatch(hideModal())}
             >
+              {t('cancel')}
+            </Button>
 
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={handleCreateChannelModalClose}
-              >
-                {t('cancel')}
-              </Button>
-
-              <Button
-                type="submit"
-                className="mx-2"
-              >
-                {t('createButton')}
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </>
+            <Button
+              type="submit"
+              className="mx-2"
+            >
+              {t('createButton')}
+            </Button>
+          </div>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 }
 

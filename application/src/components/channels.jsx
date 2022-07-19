@@ -8,7 +8,6 @@ import {
   changeChannel,
   selectors,
 } from '../slices/channelsSlice';
-import CreateChannelModal from './modals/createChannelModal';
 import ChannelActionsModals from './modals/channelActionsModals';
 import { openModal } from '../slices/modalSlice';
 
@@ -72,6 +71,7 @@ function Channels() {
   const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const { t } = useTranslation('translation', { keyPrefix: 'channels' });
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -88,7 +88,17 @@ function Channels() {
           {t('title')}
         </h2>
 
-        <CreateChannelModal />
+        <Button
+          className="d-flex align-items-center"
+          variant="outline-primary"
+          size="sm"
+          onClick={() => dispatch(openModal({
+            type: 'add',
+            item: null,
+          }))}
+        >
+          {t('createButtonShort')}
+        </Button>
       </div>
 
       <Nav

@@ -35,13 +35,13 @@ export default {
     },
     channels: {
       title: 'Каналы',
+      createButtonShort: '+',
       control: 'Управление каналом',
       rename: 'Переименовать',
       remove: 'Удалить',
     },
     createChannelModal: {
       createButton: 'Создать',
-      createButtonShort: '+',
       modalTitle: 'Создать канал',
       fieldPlaceholder: 'Введите имя канала',
       cancel: 'Отменить',
