@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npm run build --prefix application",
     "start": "start-server -s ./application/build",
-    "postinstall": "cd application npm ci"
+    "postinstall": "cd application && npm ci"
   },
   "repository": {
     "type": "git",
