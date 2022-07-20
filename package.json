@@ -5,8 +5,9 @@
   "main": "application/src/index.js",
   "type": "module",
   "scripts": {
-    "build": "npm ci && npm run build --prefix application",
-    "start": "start-server -s ./application/build"
+    "build": "npm run build --prefix application",
+    "start": "start-server -s ./application/build",
+    "postinstall": "cd application npm ci"
   },
   "repository": {
     "type": "git",
