@@ -68,7 +68,7 @@ export default {
       cancel: 'Отменить',
       networkError: 'Ошибка соединения',
       removeButton: 'Удалить',
-      successMessage: 'Канал удален',
+      successMessage: 'Канал удалён',
     },
     messages: {
       placeholder: 'Введите сообщение...',
