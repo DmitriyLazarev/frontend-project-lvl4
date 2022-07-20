@@ -28,6 +28,8 @@ function ChannelsItem(props) {
         onClick={() => dispatch(changeChannel(id))}
         className="w-100 rounded-0 text-start px-3"
       >
+        #
+        {' '}
         {name}
       </Button>
 

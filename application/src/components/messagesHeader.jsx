@@ -24,6 +24,7 @@ function MessagesHeader() {
       >
         <b>
           #
+          {' '}
           {currentChannel ? currentChannel.name : null}
         </b>
       </p>
