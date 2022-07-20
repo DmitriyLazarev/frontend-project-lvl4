@@ -22,6 +22,6 @@
     "url": "https://github.com/DmitriyLazarev/frontend-project-lvl4/issues"
   },
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.5"
+    "@hexlet/chat-server": "^1.1.6"
   }
 }
