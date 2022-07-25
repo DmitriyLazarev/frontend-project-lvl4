@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from 'react';
-import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import CharContext from '../contexts/chatContext';
 import { addMessage } from '../slices/messagesSlice';
@@ -9,9 +8,8 @@ import {
   renameChannel,
 } from '../slices/channelsSlice';
 
-function ChapProvider({ children }) {
+function ChapProvider({ children, socket }) {
   const dispatch = useDispatch();
-  const socket = io();
   useEffect(() => {
     socket.on('newMessage', (message) => {
       dispatch(addMessage(message));

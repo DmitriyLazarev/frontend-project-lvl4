@@ -4,6 +4,7 @@ import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import filter from 'leo-profanity';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import { io } from 'socket.io-client';
 import store from './slices/index';
 import AuthProvider from './providers/authProvider';
 import App from './app';
@@ -32,11 +33,12 @@ export default async () => {
   filter.clearList();
   filter.add(filter.getDictionary('ru'));
   filter.add(filter.getDictionary('en'));
+  const socket = io();
   return (
     <StoreProvider store={store}>
       <RollbarProvider config={rollbarConfig}>
         <ErrorBoundary>
-          <ChapProvider>
+          <ChapProvider socket={socket}>
             <I18nextProvider i18n={i18n}>
               <AuthProvider>
                 <App />
