@@ -50,7 +50,7 @@ function SignUp() {
         localStorage.setItem('user', JSON.stringify(response.data));
         setSignUpFailed(false);
         logIn();
-        navigate('/');
+        navigate(routes.mainPage());
       } catch (err) {
         if (err.isAxiosError && err.response.status === 409) {
           setSignUpFailed(true);
@@ -147,7 +147,7 @@ function SignUp() {
             {t('registered')}
 
             <Link
-              to="/login"
+              to={routes.loginPage()}
               variant="link"
               className="mx-2 link-primary"
             >

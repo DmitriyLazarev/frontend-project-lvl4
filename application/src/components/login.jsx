@@ -39,7 +39,7 @@ function Login() {
         // eslint-disable-next-line no-undef
         localStorage.setItem('user', JSON.stringify(res.data));
         auth.logIn();
-        navigate('/');
+        navigate(routes.mainPage());
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
@@ -120,7 +120,7 @@ function Login() {
             {t('notRegistered')}
 
             <Link
-              to="/signup"
+              to={routes.signUpPage()}
               variant="link"
               className="mx-2 link-primary"
             >
