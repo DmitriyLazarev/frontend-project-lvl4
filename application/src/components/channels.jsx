@@ -115,7 +115,7 @@ function Channels() {
           <Nav.Item
             as="li"
             key={channel.id}
-            className="w-100 flex-grow-0 w-100 overflow-hidden"
+            className="w-100 flex-grow-0 flex-shrink-0 w-100 overflow-hidden"
           >
 
             <ChannelsItem
