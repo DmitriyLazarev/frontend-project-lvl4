@@ -19,7 +19,7 @@ function Chat() {
 
   return (
     <Container
-      className="h-100 my-4 rounded shadow"
+      className="h-100 my-4 rounded overflow-hidden shadow"
     >
       <Row
         className="h-100 bg-white flex-md-row"
