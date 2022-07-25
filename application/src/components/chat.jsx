@@ -28,7 +28,7 @@ function Chat() {
         <Col
           xs={4}
           md={3}
-          className="border-end pt-4 px-0 bg-light"
+          className="border-end pt-4 px-0 bg-light h-100"
         >
 
           <Channels />

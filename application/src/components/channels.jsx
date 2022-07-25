@@ -26,7 +26,8 @@ function ChannelsItem(props) {
       <Button
         variant={id === currentChannelId ? 'secondary' : 'none'}
         onClick={() => dispatch(changeChannel(id))}
-        className="w-100 rounded-0 text-start px-3"
+        title={name}
+        className="w-100 rounded-0 text-start px-3 text-truncate"
       >
         #
         {' '}
@@ -77,7 +78,7 @@ function Channels() {
 
   return (
     <div
-      className="d-flex flex-column"
+      className="d-flex flex-column h-100"
     >
 
       <div
@@ -107,14 +108,14 @@ function Channels() {
         as="ul"
         fill
         variant="pills"
-        className="flex-column"
+        className="flex-column overflow-auto flex-grow-1 flex-nowrap"
       >
 
         {channels.map((channel) => (
           <Nav.Item
             as="li"
             key={channel.id}
-            className="w-100"
+            className="w-100 flex-grow-0 w-100 overflow-hidden"
           >
 
             <ChannelsItem
