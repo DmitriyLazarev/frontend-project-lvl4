@@ -7,9 +7,12 @@ import { selectors as messagesSelectors } from '../slices/messagesSlice';
 function MessagesHeader() {
   const { t } = useTranslation('translation', { keyPrefix: 'messages' });
 
-  const channels = useSelector(channelsSelectors.selectAll);
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannel = channels.find(({ id }) => id === currentChannelId);
+  const { currentChannel, currentChannelId } = useSelector((state) => {
+    const channelsState = channelsSelectors.selectAll(state);
+    const currentChannelIdState = state.channels.currentChannelId;
+    const currentChannelState = channelsState.find(({ id }) => id === currentChannelIdState);
+    return { currentChannel: currentChannelState, currentChannelId: currentChannelIdState };
+  });
 
   const messages = useSelector(messagesSelectors.selectAll);
   const currentChannelMessages = messages.filter((item) => item.channelId === currentChannelId);
